@@ -7,14 +7,14 @@ import java.sql.Statement;
 
 public class Conexiones {
 
-    private static Connection dbConnection = null;
-    private static Statement stmt = null;
+    public static Connection dbConnection = null;
+    public static Statement stmt = null;
 
     //Creación BD o conexión a esta, creación de tablas 'artista' y 'disco'//
     public static void accionInicial() throws SQLException {
         abrirConexion();
-        create_table_artista();
-        create_table_disco();
+        Artista.create_table_artista();
+        Disco.create_table_disco();
         cerrar_conexion(dbConnection);
     }
 
@@ -42,6 +42,7 @@ public class Conexiones {
     }
 
     // Creación de tablas si no existen //
+    /*
     public static void create_table_artista() throws SQLException {
         stmt = dbConnection.createStatement ();
         String sql = "create table if not exists artista(" +
@@ -64,5 +65,5 @@ public class Conexiones {
         stmt.close ();
         System.out.println("Se ha creado correctamente la tabla 'disco'");
     }
-
+*/
 }
