@@ -1,5 +1,6 @@
 package Modelo;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Disco extends Conexiones{
@@ -9,11 +10,14 @@ public class Disco extends Conexiones{
     private String fecha_publi;
     private int ID_artista;
 
-    public Disco(int ID, String nombre, String fecha_publi, int ID_artista) {
-        this.ID = ID;
+    public Disco(String nombre, String fecha_publi, int ID_artista) throws SQLException {
+        abrirConexion();
+        this.ID = sacar_mayor_id_disco();
         this.nombre = nombre;
         this.fecha_publi = fecha_publi;
         this.ID_artista = ID_artista;
+        insertar_disco(this.ID,this.nombre,this.fecha_publi,this.ID_artista);
+        cerrar_conexion(dbConnection);
     }
 
     public String getNombre() {
@@ -42,5 +46,29 @@ public class Disco extends Conexiones{
         stmt.executeUpdate(sql);
         stmt.close ();
         System.out.println("Se ha creado correctamente la tabla 'disco'");
+    }
+
+    private static void insertar_disco(int ID, String nombre, String fecha_publi, int ID_artista) throws SQLException {
+        stmt = dbConnection.createStatement ();
+        String sql = "INSERT INTO disco ('id','nombre','fecha_publi','id_artista') VALUES ("+ID+",'"+nombre+"','"+fecha_publi+"','"+ID_artista+"')";
+        System.out.println(sql);
+        stmt.executeUpdate(sql);
+        stmt.close ();
+        System.out.println("Se ha añadido correctamente el disco");
+    }
+
+    private static int sacar_mayor_id_disco() throws SQLException {
+        int resultado;
+        stmt = dbConnection.createStatement ();
+        String sql = "Select max(id) from disco";
+        ResultSet rs = stmt.executeQuery(sql);
+        if(rs.getInt("max(id)")==0) {
+            resultado = 1;
+        }else{
+            resultado = rs.getInt("max(id)") + 1;
+            rs.close();
+            stmt.close();
+        }
+        return resultado;
     }
 }

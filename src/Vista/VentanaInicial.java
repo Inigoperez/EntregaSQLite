@@ -70,5 +70,9 @@ public class VentanaInicial extends JFrame implements ActionListener{
         if (e.getSource()==boton_nuevo_artista) {
             Controller.vistaAgregarArtista();
         }
+        if (e.getSource()==boton_nuevo_disco) {
+            Controller.vistaAgregarDisco();
+        }
+
     }
 }
