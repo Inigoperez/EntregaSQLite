@@ -1,7 +1,10 @@
 package Modelo;
 
+import Vista.MostrarArtistas;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Artista extends Conexiones{
 
@@ -9,6 +12,7 @@ public class Artista extends Conexiones{
     private String nombre;
     private String apellido;
     private String localidad;
+
 
     public Artista(String nombre, String apellido, String localidad) throws SQLException {
         abrirConexion();
@@ -18,6 +22,14 @@ public class Artista extends Conexiones{
         this.localidad = localidad;
         insertar_artista(this.ID,this.nombre,this.apellido,this.localidad);
         cerrar_conexion(dbConnection);
+    }
+
+
+    public Artista(int ID,String nombre, String apellido, String localidad){
+        this.ID = ID;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.localidad = localidad;
     }
 
     public int getID() {
@@ -70,5 +82,20 @@ public class Artista extends Conexiones{
             stmt.close();
         }
         return resultado;
+    }
+
+    public static void select_artistas() throws SQLException {
+        abrirConexion();
+        stmt = dbConnection.createStatement ();
+        String sql = "Select * from artista";
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            // Agregar nueva fila
+            Object[] newRow = {rs.getInt("id"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("localidad")};
+            MostrarArtistas.dtm.addRow(newRow);
+        }
+        rs.close();
+        stmt.close();
+        cerrar_conexion(dbConnection);
     }
 }

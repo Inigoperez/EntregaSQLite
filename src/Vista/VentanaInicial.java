@@ -3,6 +3,8 @@ package Vista;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.image.*;
+import java.sql.SQLException;
+
 import Controlador.Controller;
 
 public class VentanaInicial extends JFrame implements ActionListener{
@@ -69,9 +71,20 @@ public class VentanaInicial extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==boton_nuevo_artista) {
             Controller.vistaAgregarArtista();
-        }
-        if (e.getSource()==boton_nuevo_disco) {
+        }else if(e.getSource()==boton_nuevo_disco){
             Controller.vistaAgregarDisco();
+        }else if(e.getSource()==boton_mostrar_artistas){
+            try {
+                Controller.vistaListaArtistas();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }else if(e.getSource()==boton_consulta_datos_artista){
+            //Controller.vistaAgregarDisco();
+        }else if(e.getSource()==boton_modificar_datos_artista){
+            //Controller.vistaAgregarDisco();
+        }else if(e.getSource()==boton_eliminar_artista_discos){
+            //Controller.vistaAgregarDisco();
         }
 
     }

@@ -1,6 +1,7 @@
 package Controlador;
 
 import Modelo.Conexiones;
+import Vista.MostrarArtistas;
 import Vista.NuevoArtista;
 import Vista.NuevoDisco;
 import Vista.VentanaInicial;
@@ -14,6 +15,7 @@ public class Controller {
     public static NuevoArtista nuevoArtista;
     public static NuevoDisco nuevoDisco;
     public static VentanaInicial menu;
+    public static MostrarArtistas listaArtistas;
 
     public static void iniciarApp() throws SQLException {
         Conexiones.accionInicial();
@@ -21,6 +23,7 @@ public class Controller {
         menu.setVisible(true);
     }
 
+    /// VISTAS DE PROGRAMA ///
     public static void vistaAgregarArtista(){
         nuevoArtista = new NuevoArtista();
         nuevoArtista.setVisible(true);
@@ -31,6 +34,13 @@ public class Controller {
         nuevoDisco.setVisible(true);
     }
 
+    public static void vistaListaArtistas() throws SQLException {
+        listaArtistas = new MostrarArtistas();
+        listaArtistas.setVisible(true);
+    }
+    /// VISTAS DE PROGRAMA ///
+
+    /// EJECUCIONES ///
     public static void agregarArtista(String nombre, String apellido, String localidad) throws SQLException {
         Artista a = new Artista(nombre,apellido,localidad);
     }
@@ -38,4 +48,9 @@ public class Controller {
     public static void agregarDisco(String nombre, String fecha_publi, int ID_artista) throws SQLException {
         Disco d = new Disco(nombre,fecha_publi,ID_artista);
     }
+
+    public static void mostrarArtistas() throws SQLException {
+        Artista.select_artistas();
+    }
+    /// EJECUCIONES ///
 }

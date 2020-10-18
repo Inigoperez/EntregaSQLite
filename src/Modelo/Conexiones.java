@@ -41,29 +41,4 @@ public class Conexiones {
         catch (SQLException e) { e.printStackTrace();  }
     }
 
-    // Creación de tablas si no existen //
-    /*
-    public static void create_table_artista() throws SQLException {
-        stmt = dbConnection.createStatement ();
-        String sql = "create table if not exists artista(" +
-                "id TINYINT(2) NOT NULL PRIMARY KEY," +
-                "nombre VARCHAR(10)," +
-                "apellido VARCHAR(10)," +
-                "localidad VARCHAR(15))";
-        stmt.executeUpdate(sql);
-        stmt.close ();
-        System.out.println("Se ha creado correctamente la tabla 'artista'");
-    }
-    public static void create_table_disco() throws SQLException {
-        stmt = dbConnection.createStatement ();
-        String sql = "create table if not exists disco(" +
-                "id TINYINT(2) NOT NULL PRIMARY KEY," +
-                "nombre VARCHAR(10)," +
-                "fecha_publi VARCHAR(10)," +
-                "id_artista TINYINT(2) NOT NULL REFERENCES artista(id))";
-        stmt.executeUpdate(sql);
-        stmt.close ();
-        System.out.println("Se ha creado correctamente la tabla 'disco'");
-    }
-*/
 }

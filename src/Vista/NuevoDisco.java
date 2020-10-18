@@ -1,6 +1,7 @@
 package Vista;
 
 import Controlador.Controller;
+import Modelo.Artista;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,7 @@ public class NuevoDisco extends JFrame implements ActionListener {
     JTextField inputFecha_publi;
     JTextField inputId_artista;
     JButton boton_añadir_disco;
+    JList listaArtistas;
 
     public NuevoDisco(){
         super("Añadir nuevo disco");
