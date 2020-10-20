@@ -1,5 +1,7 @@
 package Modelo;
 
+import Vista.ConsultaArtista;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -79,6 +81,21 @@ public class Disco extends Conexiones{
         stmt.executeUpdate(sql);
         stmt.close ();
         System.out.println("Se ha eliminado el artista correctamente");
+        cerrar_conexion(dbConnection);
+    }
+
+    public static void select_discos(int ID_artista) throws SQLException {
+        abrirConexion();
+        stmt = dbConnection.createStatement ();
+        String sql = "SELECT * FROM disco where id_artista ='"+ID_artista+"'";
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            // Agregar nueva fila en Artista//
+            Object[] newRowDisco = {rs.getInt("id"),rs.getString("nombre"),rs.getString("fecha_publi")};
+            ConsultaArtista.dtmDiscos.addRow(newRowDisco);
+        }
+        rs.close();
+        stmt.close();
         cerrar_conexion(dbConnection);
     }
 }

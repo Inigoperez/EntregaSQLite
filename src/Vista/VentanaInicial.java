@@ -81,7 +81,7 @@ public class VentanaInicial extends JFrame implements ActionListener{
             }
         }else if(e.getSource()==boton_consulta_datos_artista){
             try {
-                Controller.vistaMostrarArtista();
+                Controller.SeleccionUserDiscos();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

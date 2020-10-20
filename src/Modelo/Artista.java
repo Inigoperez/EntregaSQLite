@@ -148,6 +148,28 @@ public class Artista extends Conexiones{
         return lista_IDs;
     }
 
+    public static ArrayList<Integer> listar_artistas_seleccion_disco() throws SQLException {
+        ArrayList<Integer> lista_IDs = new ArrayList<Integer>();
+        abrirConexion();
+        stmt = dbConnection.createStatement ();
+        String sql = "Select * from artista";
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            // Agregar nueva fila
+            Object[] newRow = { rs.getInt("id"),
+                    rs.getString("nombre"),
+                    rs.getString("apellido"),
+                    rs.getString("localidad")
+            };
+            SeleccionUserDiscos.dtm.addRow(newRow);
+            lista_IDs.add(rs.getInt("id"));
+        }
+        rs.close();
+        stmt.close();
+        cerrar_conexion(dbConnection);
+        return lista_IDs;
+    }
+
     public static ArrayList datos_de_artista(int ID) throws SQLException {
         ArrayList<String> datos_Artista = new ArrayList<String>();
         abrirConexion();
@@ -172,24 +194,6 @@ public class Artista extends Conexiones{
         stmt.executeUpdate(sql);
         stmt.close ();
         System.out.println("Se ha modificado correctamente");
-        cerrar_conexion(dbConnection);
-    }
-
-    public static void inner_artista_discos() throws SQLException {
-        abrirConexion();
-        stmt = dbConnection.createStatement ();
-        String sql = "SELECT * FROM artista as a INNER JOIN disco as d on d.id_artista = a.id";
-        ResultSet rs = stmt.executeQuery(sql);
-        while(rs.next()){
-            // Agregar nueva fila en Artista//
-            Object[] newRowArtista = {rs.getInt("artista.id"),rs.getString("artista.nombre"),rs.getString("artista.apellido"),rs.getString("artista.localidad")};
-            ConsultaArtista.dtmArtistas.addRow(newRowArtista);
-            // Agregar nueva fila en Artista//
-            Object[] newRowDisco = {rs.getInt("disco.id"),rs.getString("disco.nombre"),rs.getString("disco.fecha_publi"),rs.getString("disco.id_artista")};
-            ConsultaArtista.dtmDiscos.addRow(newRowDisco);
-        }
-        rs.close();
-        stmt.close();
         cerrar_conexion(dbConnection);
     }
 

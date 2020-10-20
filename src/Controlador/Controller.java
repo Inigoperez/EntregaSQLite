@@ -18,6 +18,7 @@ public class Controller {
     public static SeleccionUser seleccionUser;
     public static EditarArtista editarArtista;
     public static SeleccionUserEliminar seleccionUserEliminar;
+    public static SeleccionUserDiscos seleccionUserDiscos;
 
     public static void iniciarApp() throws SQLException {
         Conexiones.accionInicial();
@@ -41,8 +42,8 @@ public class Controller {
         listaArtistas.setVisible(true);
     }
 
-    public static void vistaMostrarArtista() throws SQLException {
-        datosArtista = new ConsultaArtista();
+    public static void vistaMostrarArtista(ArrayList ID) throws SQLException {
+        datosArtista = new ConsultaArtista(ID);
         datosArtista.setVisible(true);
     }
 
@@ -59,6 +60,11 @@ public class Controller {
     public static void SeleccionUserEliminar() throws SQLException {
         seleccionUserEliminar = new SeleccionUserEliminar();
         seleccionUserEliminar.setVisible(true);
+    }
+
+    public static void SeleccionUserDiscos() throws SQLException {
+        seleccionUserDiscos = new SeleccionUserDiscos();
+        seleccionUserDiscos.setVisible(true);
     }
     /// VISTAS DE PROGRAMA ///
 
@@ -83,6 +89,10 @@ public class Controller {
         return Artista.listar_artistas_seleccion_eliminar();
     }
 
+    public static ArrayList<Integer> listarArtistas2() throws SQLException{
+        return Artista.listar_artistas_seleccion_disco();
+    }
+
     public static void sacarDatosArtista(int ID) throws SQLException {
         EditarArtista(Artista.datos_de_artista(ID));
     }
@@ -94,6 +104,10 @@ public class Controller {
     public static void eliminarUsuariosDiscos(int ID) throws SQLException {
         Disco.eliminarDiscos(ID);
         Artista.eliminarArtista(ID);
+    }
+
+    public static void vistaMostrarDiscos(ArrayList datos_artista) throws SQLException {
+        vistaMostrarArtista(datos_artista);
     }
     /// EJECUCIONES ///
 }
