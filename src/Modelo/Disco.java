@@ -71,4 +71,14 @@ public class Disco extends Conexiones{
         }
         return resultado;
     }
+
+    public static void eliminarDiscos(int ID_artista) throws SQLException {
+        abrirConexion();
+        stmt = dbConnection.createStatement();
+        String sql = "Delete from disco where id_artista='"+ID_artista+"'";
+        stmt.executeUpdate(sql);
+        stmt.close ();
+        System.out.println("Se ha eliminado el artista correctamente");
+        cerrar_conexion(dbConnection);
+    }
 }

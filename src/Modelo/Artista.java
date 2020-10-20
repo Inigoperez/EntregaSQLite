@@ -1,6 +1,7 @@
 package Modelo;
 
-import Vista.MostrarArtistas;
+import Controlador.Controller;
+import Vista.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -91,11 +92,114 @@ public class Artista extends Conexiones{
         ResultSet rs = stmt.executeQuery(sql);
         while(rs.next()){
             // Agregar nueva fila
-            Object[] newRow = {rs.getInt("id"),rs.getString("nombre"),rs.getString("apellido"),rs.getString("localidad")};
+            Object[] newRow = { rs.getInt("id"),
+                                rs.getString("nombre"),
+                                rs.getString("apellido"),
+                                rs.getString("localidad")
+            };
             MostrarArtistas.dtm.addRow(newRow);
         }
         rs.close();
         stmt.close();
+        cerrar_conexion(dbConnection);
+    }
+
+    public static ArrayList<Integer> listar_artistas_seleccion() throws SQLException {
+        ArrayList<Integer> lista_IDs = new ArrayList<Integer>();
+        abrirConexion();
+        stmt = dbConnection.createStatement ();
+        String sql = "Select * from artista";
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            // Agregar nueva fila
+            Object[] newRow = { rs.getInt("id"),
+                    rs.getString("nombre"),
+                    rs.getString("apellido"),
+                    rs.getString("localidad")
+            };
+            SeleccionUser.dtm.addRow(newRow);
+            lista_IDs.add(rs.getInt("id"));
+        }
+        rs.close();
+        stmt.close();
+        cerrar_conexion(dbConnection);
+        return lista_IDs;
+    }
+
+    public static ArrayList<Integer> listar_artistas_seleccion_eliminar() throws SQLException {
+        ArrayList<Integer> lista_IDs = new ArrayList<Integer>();
+        abrirConexion();
+        stmt = dbConnection.createStatement ();
+        String sql = "Select * from artista";
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            // Agregar nueva fila
+            Object[] newRow = { rs.getInt("id"),
+                    rs.getString("nombre"),
+                    rs.getString("apellido"),
+                    rs.getString("localidad")
+            };
+            SeleccionUserEliminar.dtm.addRow(newRow);
+            lista_IDs.add(rs.getInt("id"));
+        }
+        rs.close();
+        stmt.close();
+        cerrar_conexion(dbConnection);
+        return lista_IDs;
+    }
+
+    public static ArrayList datos_de_artista(int ID) throws SQLException {
+        ArrayList<String> datos_Artista = new ArrayList<String>();
+        abrirConexion();
+        stmt = dbConnection.createStatement ();
+        String sql = "Select * from artista where id="+ID;
+        System.out.println(sql);
+        ResultSet rs = stmt.executeQuery(sql);
+            datos_Artista.add(String.valueOf(rs.getInt("id")));
+            datos_Artista.add(rs.getString("nombre"));
+            datos_Artista.add(rs.getString("apellido"));
+            datos_Artista.add(rs.getString("localidad"));
+        rs.close();
+        stmt.close();
+        cerrar_conexion(dbConnection);
+        return datos_Artista;
+    }
+
+    public static void cambiarDatosArtista(int ID, String nombre, String apellido, String localidad) throws SQLException {
+        abrirConexion();
+        stmt = dbConnection.createStatement ();
+        String sql = "UPDATE artista SET nombre='"+nombre+"',apellido='"+apellido+"',localidad='"+localidad+"' WHERE id='"+ID+"'";
+        stmt.executeUpdate(sql);
+        stmt.close ();
+        System.out.println("Se ha modificado correctamente");
+        cerrar_conexion(dbConnection);
+    }
+
+    public static void inner_artista_discos() throws SQLException {
+        abrirConexion();
+        stmt = dbConnection.createStatement ();
+        String sql = "SELECT * FROM artista as a INNER JOIN disco as d on d.id_artista = a.id";
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            // Agregar nueva fila en Artista//
+            Object[] newRowArtista = {rs.getInt("artista.id"),rs.getString("artista.nombre"),rs.getString("artista.apellido"),rs.getString("artista.localidad")};
+            ConsultaArtista.dtmArtistas.addRow(newRowArtista);
+            // Agregar nueva fila en Artista//
+            Object[] newRowDisco = {rs.getInt("disco.id"),rs.getString("disco.nombre"),rs.getString("disco.fecha_publi"),rs.getString("disco.id_artista")};
+            ConsultaArtista.dtmDiscos.addRow(newRowDisco);
+        }
+        rs.close();
+        stmt.close();
+        cerrar_conexion(dbConnection);
+    }
+
+    public static void eliminarArtista(int ID) throws SQLException {
+        abrirConexion();
+        stmt = dbConnection.createStatement();
+        String sql = "Delete from artista where ID='"+ID+"'";
+        stmt.executeUpdate(sql);
+        stmt.close ();
+        System.out.println("Se ha eliminado el artista correctamente");
         cerrar_conexion(dbConnection);
     }
 }

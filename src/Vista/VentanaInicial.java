@@ -80,11 +80,23 @@ public class VentanaInicial extends JFrame implements ActionListener{
                 throwables.printStackTrace();
             }
         }else if(e.getSource()==boton_consulta_datos_artista){
-            //Controller.vistaAgregarDisco();
+            try {
+                Controller.vistaMostrarArtista();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }else if(e.getSource()==boton_modificar_datos_artista){
-            //Controller.vistaAgregarDisco();
+            try {
+                Controller.seleccionUser();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }else if(e.getSource()==boton_eliminar_artista_discos){
-            //Controller.vistaAgregarDisco();
+            try {
+                Controller.SeleccionUserEliminar();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
 
     }

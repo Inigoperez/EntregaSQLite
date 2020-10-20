@@ -15,7 +15,7 @@ public class MostrarArtistas extends JFrame{
     JLabel titulo;
     JTable table;
     JScrollPane scrollPane;
-    String[] columnNames = {"ID","Nombre","Apellido","Localidad",};
+    String[] columnNames = {"ID","Nombre","Apellido","Localidad"};
     Object[][] datos = {};
     public static DefaultTableModel dtm;
 
@@ -40,4 +40,6 @@ public class MostrarArtistas extends JFrame{
         contenido.add(scrollPane);
         this.add(contenido);
     }
+
+
 }
